@@ -3,6 +3,8 @@ import { faArrowUp, faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import CalendarObject from "@/components/CalendarObject";
+import WaveLine from "@/assets/waveline.svg";
+import Image from "next/image";
 
 interface Task {
   description: string;
@@ -131,121 +133,125 @@ export default function Main() {
   };
 
   return (
-    <section className="page-margins py-4">
-      <div className="flex flex-col gap-y-6">
-        <h2>Dashboard</h2>
-        <div className="flex w-full gap-x-4">
-          <div className="w-full flex gap-x-2">
-            <div className="bg-surface-200 px-4 py-3 w-full flex items-center gap-x-3 rounded focus-within:ring-1 ring-palette-200 duration-200">
-              <button className="flex items-center justify-center hover:bg-surface-400 p-2 rounded aspect-square">
-                <FontAwesomeIcon className="h-6" icon={faPaperclip} />
+    <>
+      <Image className="absolute -z-50 mt-40" src={WaveLine} alt="" />
+      <section className="page-margins py-4">
+        <div className="flex flex-col gap-y-6">
+          <h2>Dashboard</h2>
+          <div className="flex w-full gap-x-4">
+            <div className="w-full flex gap-x-2">
+              <div className="bg-surface-200 shadow px-4 py-3 w-full flex items-center gap-x-3 rounded focus-within:ring-1 ring-palette-200 duration-200">
+                <button className="flex items-center justify-center hover:bg-surface-400 p-2 rounded aspect-square">
+                  <FontAwesomeIcon className="h-6" icon={faPaperclip} />
+                </button>
+
+                <input
+                  className="bg-surface-200 w-full focus:outline-none"
+                  placeholder="Enter your prompt"
+                  value={prompt}
+                  onChange={handlePromptChange}
+                />
+              </div>
+              <button
+                className="btn-primary p-0 h-full aspect-square"
+                onClick={handleSubmit}
+                disabled={loading}
+              >
+                {loading ? (
+                  <svg
+                    className="w-9 h-9"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 200 200"
+                  >
+                    <path
+                      fill="#FFFFFF"
+                      stroke="#FFFFFF"
+                      stroke-width="15"
+                      transform-origin="center"
+                      d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"
+                    >
+                      <animateTransform
+                        type="rotate"
+                        attributeName="transform"
+                        calcMode="spline"
+                        dur="2"
+                        values="0;120"
+                        keyTimes="0;1"
+                        keySplines="0 0 1 1"
+                        repeatCount="indefinite"
+                      ></animateTransform>
+                    </path>
+                  </svg>
+                ) : (
+                  <FontAwesomeIcon className="text-2xl" icon={faArrowUp} />
+                )}
               </button>
-
-              <input
-                className="bg-surface-200 w-full focus:outline-none"
-                placeholder="Enter your prompt"
-                value={prompt}
-                onChange={handlePromptChange}
-              />
             </div>
-            <button
-              className="btn-primary p-0 h-full aspect-square"
-              onClick={handleSubmit}
-              disabled={loading}
-            >
-              {loading ? (
-                <svg
-                  className="w-9 h-9"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 200 200"
-                >
-                  <path
-                    fill="#FFFFFF"
-                    stroke="#FFFFFF"
-                    stroke-width="15"
-                    transform-origin="center"
-                    d="m148 84.7 13.8-8-10-17.3-13.8 8a50 50 0 0 0-27.4-15.9v-16h-20v16A50 50 0 0 0 63 67.4l-13.8-8-10 17.3 13.8 8a50 50 0 0 0 0 31.7l-13.8 8 10 17.3 13.8-8a50 50 0 0 0 27.5 15.9v16h20v-16a50 50 0 0 0 27.4-15.9l13.8 8 10-17.3-13.8-8a50 50 0 0 0 0-31.7Zm-47.5 50.8a35 35 0 1 1 0-70 35 35 0 0 1 0 70Z"
-                  >
-                    <animateTransform
-                      type="rotate"
-                      attributeName="transform"
-                      calcMode="spline"
-                      dur="2"
-                      values="0;120"
-                      keyTimes="0;1"
-                      keySplines="0 0 1 1"
-                      repeatCount="indefinite"
-                    ></animateTransform>
-                  </path>
-                </svg>
-              ) : (
-                <FontAwesomeIcon className="text-2xl" icon={faArrowUp} />
-              )}
-            </button>
           </div>
-        </div>
 
-        <div className="flex gap-6 w-full min-h-[60vh]">
-          <div className="bg-surface-200 w-1/3 rounded px-4 py-3 flex flex-col gap-y-3">
-            <h3 className="w-full text-center">To Do</h3>
-            <div className="grid grid-cols-1 w-full gap-4 rounded">
-              {tasks.length > 0 ? (
-                tasks.map((task, index) => (
-                  <div
-                    key={index}
-                    className="flex gap-x-1.5 items-start p-4 rounded bg-surface-100 "
-                  >
-                    <input
-                      type="checkbox"
-                      className="mt-0.5 bg-surface-300 rounded-sm border-[3.5px] border-surface-300 appearance-none w-[18px] h-[18px] checked:bg-palette-100 cursor-pointer"
-                    />
-                    <div className="flex flex-col gap-y-1 items-start">
-                      <p className="text-start">{task.description}</p>
-                      <p className="text-xs">
-                        {new Date(task.dateTime).toLocaleString("en-US", {
-                          hour: "numeric",
-                          minute: "numeric",
-                          hour12: true,
-                        })}
-                      </p>
+          <div className="flex gap-6 w-full min-h-[60vh]">
+            <div className="bg-surface-200 w-1/3 rounded px-4 py-3 flex flex-col gap-y-3 shadow">
+              <h3 className="w-full text-center">To Do</h3>
+              <div className="grid grid-cols-1 w-full gap-4 rounded">
+                {tasks.length > 0 ? (
+                  tasks.map((task, index) => (
+                    <div
+                      key={index}
+                      className="flex gap-x-1.5 items-start p-4 rounded bg-surface-100 "
+                    >
+                      <input
+                        type="checkbox"
+                        className="mt-0.5 bg-surface-300 rounded-sm border-[3.5px] border-surface-300 appearance-none w-[18px] h-[18px] checked:bg-palette-100 cursor-pointer"
+                      />
+                      <div className="flex flex-col gap-y-1 items-start">
+                        <p className="text-start">{task.description}</p>
+                        <p className="text-xs">
+                          {new Date(task.dateTime).toLocaleString("en-US", {
+                            hour: "numeric",
+                            minute: "numeric",
+                            hour12: true,
+                          })}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-center">No tasks scheduled</p>
-              )}
+                  ))
+                ) : (
+                  <p className="text-center">No tasks scheduled</p>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="bg-surface-200 w-full rounded px-4 py-3 flex flex-col gap-y-3">
-            <h3 className="w-full text-center">Calendar</h3>
-            <div className="grid grid-cols-3 w-full h-full gap-4">
-              {threeDays.map((dayDate, index) => {
-                // Get the formatted date in the format YYYY-MM-DDTHH:MM:SSZ
-                const formattedDateAddSecond: string =
-                  formatDateAddSecond(dayDate);
-                const formattedDate: string = formatDate(dayDate);
+            <div className="bg-surface-200 w-full rounded px-4 py-3 flex flex-col gap-y-3 shadow">
+              <h3 className="w-full text-center">Calendar</h3>
+              <div className="grid grid-cols-3 w-full h-full gap-4">
+                {threeDays.map((dayDate, index) => {
+                  // Get the formatted date in the format YYYY-MM-DDTHH:MM:SSZ
+                  const formattedDateAddSecond: string =
+                    formatDateAddSecond(dayDate);
+                  const formattedDate: string = formatDate(dayDate);
 
-                // Access the calendarObject using the formattedDate as the key
-                const calendarObject = calendarObjects?.[formattedDate] || null; // Safe access using the formatted date
+                  // Access the calendarObject using the formattedDate as the key
+                  const calendarObject =
+                    calendarObjects?.[formattedDate] || null; // Safe access using the formatted date
 
-                return (
-                  <CalendarObject
-                    key={index}
-                    day={new Date(
-                      dayDate.setDate(dayDate.getDate() + 1)
-                    ).toLocaleDateString(undefined, {
-                      weekday: "long",
-                    })}
-                    date={formattedDateAddSecond}
-                    tasks={calendarObject?.tasks || []} // Use tasks from calendarObject or fallback to empty array
-                    events={calendarObject?.events || []} // Use events from calendarObject or fallback to empty array
-                  />
-                );
-              })}
+                  return (
+                    <CalendarObject
+                      key={index}
+                      day={new Date(
+                        dayDate.setDate(dayDate.getDate() + 1)
+                      ).toLocaleDateString(undefined, {
+                        weekday: "long",
+                      })}
+                      date={formattedDateAddSecond}
+                      tasks={calendarObject?.tasks || []} // Use tasks from calendarObject or fallback to empty array
+                      events={calendarObject?.events || []} // Use events from calendarObject or fallback to empty array
+                    />
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

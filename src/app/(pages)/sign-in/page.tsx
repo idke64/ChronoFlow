@@ -4,18 +4,42 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import WaveLine from "@/assets/waveline.svg";
 import supabase from "@/config/supabase"; // Import your supabase client
+import { useRouter } from "next/navigation"; // Import useRouter from Next.js
+import { useEffect } from "react";
 
 export default function SignIn() {
+  const router = useRouter(); // Initialize router
+
   const signInWithGoogle = async () => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
+        options: {
+          redirectTo: window.location.origin + "/dashboard", // Redirect to dashboard after sign-in
+        },
       });
+
       if (error) throw error;
     } catch (error) {
-      console.error("Error signing in with Google");
+      console.error("Error signing in with Google:", error);
     }
   };
+
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (session) {
+          // If the user is signed in, redirect to the dashboard
+          router.push("/dashboard");
+        }
+      }
+    );
+
+    // Clean up listener on component unmount
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, [router]);
 
   return (
     <>
