@@ -1,12 +1,23 @@
+'use client';
 import {
   faArrowUp,
-  faMagnifyingGlass,
   faPaperclip,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Main() {
+  const [prompt, setPrompt] = useState("");
+  const handlePromptChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPrompt(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    console.log(prompt);
+    setPrompt("");
+  };
+
   return (
     <section className="page-margins py-4">
       <div className="flex w-full gap-x-4">
@@ -16,9 +27,14 @@ export default function Main() {
             <input
               className="bg-surface-200 w-full focus:outline-none"
               placeholder="Enter your prompt"
+              value={prompt}
+              onChange={handlePromptChange}
             />
           </div>
-          <button className="btn-primary p-0 h-full aspect-square">
+          <button
+            className="btn-primary p-0 h-full aspect-square"
+            onClick={handleSubmit}
+          >
             <FontAwesomeIcon className="text-2xl" icon={faArrowUp} />
           </button>
         </div>
