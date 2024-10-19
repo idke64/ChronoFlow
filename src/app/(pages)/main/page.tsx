@@ -13,8 +13,14 @@ export default function Main() {
     setPrompt(e.target.value);
   };
 
-  const handleSubmit = () => {
+
+
+  const handleSubmit = async () => {
     console.log(prompt);
+    const response = await fetch("/api/process-prompt", {
+      method: "POST",
+      body: JSON.stringify({ prompt }),
+    });
     setPrompt("");
   };
 
