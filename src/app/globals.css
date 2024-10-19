@@ -12,7 +12,7 @@
   }
 
   .btn-primary {
-    @apply rounded bg-palette-200 px-4 h-9 font-semibold hover:bg-palette-200/80 duration-200 flex items-center justify-center;
+    @apply rounded bg-palette-200 px-4 h-9 font-semibold hover:bg-palette-200/80 duration-200 flex items-center justify-center disabled:opacity-50 disabled:hover:bg-palette-200;
   }
 
   .btn-secondary {
@@ -25,7 +25,7 @@
     @apply bg-surface-100 text-text-primary overflow-y-scroll overflow-x-hidden;
   }
   h1 {
-    @apply text-4xl font-bold leading-tight;
+    @apply text-5xl font-bold leading-tight;
   }
   h2 {
     @apply text-3xl font-semibold leading-snug;
