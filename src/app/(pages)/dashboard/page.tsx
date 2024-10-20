@@ -100,7 +100,7 @@ export default function Main() {
   // Generate an array of 3 consecutive days starting from currDate
   const getThreeDays = (startDate: Date): Date[] => {
     const days: Date[] = [];
-    for (let i = 0; i < 3; i++) {
+    for (let i = -1; i < 2; i++) {
       const date = new Date(startDate.getTime()); // Use getTime() to clone the date
       date.setDate(startDate.getDate() + i); // Add i days to the date
       days.push(date);
@@ -190,7 +190,7 @@ export default function Main() {
           </div>
 
           <div className="flex gap-6 w-full min-h-[60vh]">
-            <div className="bg-surface-200 w-1/3 rounded px-4 py-3 flex flex-col gap-y-3 shadow">
+            <div className="bg-surface-200 w-1/3 rounded px-4 py-3 flex flex-col gap-y-3">
               <h3 className="w-full text-center">To Do</h3>
               <div className="grid grid-cols-1 w-full gap-4 rounded">
                 {tasks.length > 0 ? (
@@ -220,7 +220,7 @@ export default function Main() {
                 )}
               </div>
             </div>
-            <div className="bg-surface-200 w-full rounded px-4 py-3 flex flex-col gap-y-3 shadow">
+            <div className="bg-surface-200 w-full rounded px-4 py-3 flex flex-col gap-y-3">
               <h3 className="w-full text-center">Calendar</h3>
               <div className="grid grid-cols-3 w-full h-full gap-4">
                 {threeDays.map((dayDate, index) => {

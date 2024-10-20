@@ -4,12 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import WaveLine from "@/assets/waveline.svg";
+import Mac from "@/assets/mac.svg";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <>
       <Image className="absolute -z-50 mt-40" src={WaveLine} alt="" />
+      <Image className="absolute -z-50 right-0 mt-40" src={Mac} alt="" />
       <section className="page-margins py-4">
         <div className="flex w-full pt-60">
           <div className="flex flex-col gap-y-6 w-full">
